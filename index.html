@@ -12,11 +12,18 @@
         <span>Time Left: 75</span>
     </header>
     <main>
-        <h1 class="code-header">The Code Quiz</h1>
-        <p>Welcome to The Code Quiz! Once you press start, you will be asked to answer multiple choice questions about JavaScript.
-            You will have 75 seconds to answer as many questions as you can. If you get a question right, you gain a point! If you get a question wrong, 
-            you lose 5 seconds. Good Luck!</p>
-        <button class="btn">Start</button>
+        <div id="start-screen">
+            <h1 class="code-header">The Code Quiz</h1>
+            <p>Welcome to The Code Quiz! Once you press start, you will be asked to answer multiple choice questions about JavaScript.
+                You will have 75 seconds to answer as many questions as you can. If you get a question right, you gain a point! If you get a question wrong, 
+                you lose 5 seconds. Good Luck!</p>
+            <button id="start-btn" class="btn">Start</button>
+        </div>
+        <div id="question-screen" style="display:none">
+            <h1 id="question-title" class="question-title"></h1>
+            <ol id="question-list" class="question-list">
+            </ol>
+        </div>
     </main>
 
 <script src="./assets/js/script.js"></script>

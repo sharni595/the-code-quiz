@@ -9,13 +9,13 @@ header{
     display: flex;
     justify-content: flex-end;
     padding-top: 20px;
-    padding-right: 20px;
+    padding-right: 25px;
 }
 
 main{
-    margin: 200px;
+    margin: 15%;
     text-align: center;
-    padding: 0 100px;
+    padding: 0 10%;
 }
 
 .code-header{
@@ -34,4 +34,22 @@ main{
 
 .btn:hover{
     background-color: tomato;
+    cursor: pointer;
+}
+
+.question-title{
+    text-align: center;
+}
+
+.question-list li{
+    margin: 20px 20%;
+    list-style: none;
+    background-color: #c43721;
+    padding: 10px 0px;
+    border-radius: 15px;
+}
+
+.question-list li:hover{
+    background-color: tomato;
+    cursor: pointer;
 }
