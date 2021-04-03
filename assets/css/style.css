@@ -5,7 +5,7 @@
     font-style: normal;
 }
 
-header{
+.time-left{
     display: flex;
     justify-content: flex-end;
     padding-top: 20px;
@@ -42,7 +42,7 @@ main{
 }
 
 .question-list li{
-    margin: 20px 20%;
+    margin: 20px 15%;
     list-style: none;
     background-color: #c43721;
     padding: 10px 0px;
