@@ -3,7 +3,8 @@ var startScreen = document.querySelector("#start-screen");
 var startButton = document.querySelector("#start-btn");
 var questionScreen = document.querySelector("#question-screen");
 var timeLeft = document.querySelector("#time-left");
-var time = 75;
+var gameOverScreen = document.querySelector("#game-over");
+var time = 10;
 var score = 0;
 var questionIndex = 0;
 var quizQuestions = [{
@@ -50,6 +51,7 @@ startButton.addEventListener("click", function(){
     countdown();
 })
 
+//count down timer
  function countdown(){
      var timeInterval = setInterval(function(){
          if (time > 0){
@@ -58,6 +60,8 @@ startButton.addEventListener("click", function(){
          } else {
              alert("Times up!");
              gameOver();
+             clearInterval(timeInterval);
+             timeLeft.setAttribute("style", "display:none;");
          }
      }, 1000);
 }
@@ -77,21 +81,21 @@ function displayQuestion(){
 
     
     function checkAnswer (e){
-       
+        //check if answer is correct or incorrect
         if (e.path[0].attributes.value.value !== quizQuestions[questionIndex].correct){
             time -= 5;
             var incorrect = document.createElement("p");
             incorrect.textContent = "Incorrect!"
             incorrect.classList.add("incorrect");
             questionList.appendChild(incorrect);
-        } else{
-            
+        } else{        
             var correct = document.createElement("p");
             correct.textContent = "Correct!"
             correct.classList.add("correct");
             questionList.appendChild(correct);
             score++;
-        }
+        }  
+        //to allow time for viewer to see if answer is correct or not before moving onto the next
         setTimeout(function(){
             if (questionIndex < quizQuestions.length){
                 questionIndex++;
@@ -99,17 +103,25 @@ function displayQuestion(){
             } else{
                 gameOver();
             }  
-        }, 2000);
+        }, 1000);
     };
-
-    
-    // if (timeLeft <= 0){
-    //     return score;
-    // } else if (questionIndex < quizQuestions.length){
-    //     questionIndex++;
-        
-    // } else{
-    //     return score;
-    // }
-
 };
+
+
+function gameOver(){
+    //change to game over screen
+    questionScreen.setAttribute("style", "display:none");
+    gameOverScreen.removeAttribute("style");
+    //view final score
+    var gameScore = document.querySelector("#game-score");
+    gameScore.textContent = "Your final score is " + score;
+    //create label and input for initials
+    var enterInitialsEl = document.createElement("div");
+    enterInitialsEl.classList.add("enter-initials");
+    enterInitialsEl.innerHTML = "<label class='initials-label' for='input'>Enter Initials:</label><input type='text' name='input' class='initials-input'/>";
+    gameOverScreen.appendChild(enterInitialsEl);
+ 
+    //store input in local storage
+    
+ 
+}

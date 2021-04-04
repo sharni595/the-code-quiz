@@ -3,9 +3,12 @@
     font-family: omnes-pro, sans-serif;
     font-weight: 700;
     font-style: normal;
+    margin: 0;
+    padding: 0;
+
 }
 
-.time-left{
+#time-left{
     display: flex;
     justify-content: flex-end;
     padding-top: 20px;
@@ -13,9 +16,10 @@
 }
 
 main{
-    margin: 15%;
+    width: 65%;
     text-align: center;
     padding: 0 10%;
+    margin: 5% auto;
 }
 
 .code-header{
@@ -27,9 +31,10 @@ main{
     padding: 8px 20px;
     border: none;
     font-size: 20px;
-    border-radius: 10%;
+    border-radius: 10px;
     background-color: #c43721;
     color: white;
+    margin-top: 20px;
 }
 
 .btn:hover{
@@ -38,18 +43,51 @@ main{
 }
 
 .question-title{
-    text-align: center;
+    text-align: left;
 }
 
 .question-list li{
-    margin: 20px 15%;
+    margin: 25px 0;
     list-style: none;
     background-color: #c43721;
-    padding: 10px 0px;
+    padding: 10px 15px;
     border-radius: 15px;
+    text-align: left;
 }
 
 .question-list li:hover{
     background-color: tomato;
     cursor: pointer;
+}
+
+.correct, .incorrect{
+    color: lightgray;
+    font-style: italic;
+    text-align: left;
+    border-top: 1px solid lightgray;
+}
+
+.game-over{
+    margin-top: 100px;
+}
+
+.game-over h2{
+    color: #c43721;
+    font-size: 40px;
+}
+
+.game-over p{
+    margin: 20px;
+}
+
+.enter-initials{
+    display: flex;
+    margin-top: 15px;
+}
+
+.initials-input{
+    margin-left: 15px;
+    border: none;
+    background-color: lightgrey;
+    border-radius: 5px;
 }
