@@ -33,7 +33,7 @@ var quizQuestions = [{
 },
 {
     question: "Which array is written correctly?",
-    choices: ["var myArray = {hello, world}", "var myArray = 'hello', 'world'", "var myArray = [1, 2, 3]", "var myArray = (1, 2, 3"],
+    choices: ["var myArray = {hello, world}", "var myArray = 'hello', 'world'", "var myArray = [1, 2, 3]", "var myArray = (1, 2, 3)"],
     correct: "var myArray = [1, 2, 3]"
 },
 {
@@ -50,18 +50,19 @@ startButton.addEventListener("click", function(){
     countdown();
 })
 
-function countdown(){
-    var timeInterval = setInterval(function(){
-        if (time > 0){
-            timeLeft.textContent = time;
-            time--;
-        } else {
-            alert("Times up!");
-            gameOver();
-        }
-    }, 1000);
+ function countdown(){
+     var timeInterval = setInterval(function(){
+         if (time > 0){
+             timeLeft.textContent = time;
+             time--;
+         } else {
+             alert("Times up!");
+             gameOver();
+         }
+     }, 1000);
 }
 function displayQuestion(){
+
     var questionTitle = document.querySelector("#question-title");
     var questionList = document.querySelector("#question-list");
     questionTitle.textContent = quizQuestions[questionIndex].question;
@@ -69,38 +70,46 @@ function displayQuestion(){
     quizQuestions[questionIndex].choices.forEach(function(choice){
         var listEl = document.createElement("li");
         listEl.textContent = choice;
+        listEl.setAttribute("value", choice);
         questionList.appendChild(listEl);
         listEl.addEventListener("click", checkAnswer);
     });
-};
 
-function checkAnswer (){
-    if (timeLeft <= 0){
-        return score;
-    } else if (questionIndex < quizQuestions.length){
-        if (quizQuestions[questionIndex].choices.clicked === quizQuestions[questionIndex].correct){
+    
+    function checkAnswer (e){
+       
+        if (e.path[0].attributes.value.value !== quizQuestions[questionIndex].correct){
+            time -= 5;
+            var incorrect = document.createElement("p");
+            incorrect.textContent = "Incorrect!"
+            incorrect.classList.add("incorrect");
+            questionList.appendChild(incorrect);
+        } else{
+            
             var correct = document.createElement("p");
             correct.textContent = "Correct!"
             correct.classList.add("correct");
             questionList.appendChild(correct);
-        
             score++;
-        } else{
-            time -= 5;
         }
-        questionIndex++;
-        displayQuestion();
-    } else{
-        return score;
-    }
-    
+        setTimeout(function(){
+            if (questionIndex < quizQuestions.length){
+                questionIndex++;
+                displayQuestion();
+            } else{
+                gameOver();
+            }  
+        }, 2000);
+    };
 
     
-    
-    
-    
-   
-    //create if statement
-    //if correct, increment score and question index
-    //if incorrect, only increment question index
+    // if (timeLeft <= 0){
+    //     return score;
+    // } else if (questionIndex < quizQuestions.length){
+    //     questionIndex++;
+        
+    // } else{
+    //     return score;
+    // }
+
 };
