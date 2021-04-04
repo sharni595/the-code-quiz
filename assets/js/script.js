@@ -4,7 +4,8 @@ var startButton = document.querySelector("#start-btn");
 var questionScreen = document.querySelector("#question-screen");
 var timeLeft = document.querySelector("#time-left");
 var gameOverScreen = document.querySelector("#game-over");
-var time = 10;
+var scoreScreen = document.querySelector("#score-list");
+var time = 20;
 var score = 0;
 var questionIndex = 0;
 var quizQuestions = [{
@@ -42,29 +43,40 @@ var quizQuestions = [{
     choices: ["for (var i = 0; i < 5; i++)", "for (i = 0)", "for loop (var 1 <= 5)", "for [loop i = 0; i < 5]"],
     correct: "for (var i = 0; i < 5; i++)"
 }
-]
+];
+
+var quickViewScore = document.querySelector("#quick-view");
+quickViewScore.addEventListener("click", function(){
+    startScreen.setAttribute("style", "display:none");
+    questionScreen.setAttribute("style", "display:none");
+    gameOverScreen.setAttribute("style", "display:none");
+    scoreScreen.removeAttribute("style");
+    saveScore();
+});
 
 startButton.addEventListener("click", function(){
     startScreen.setAttribute("style", "display:none");
     questionScreen.removeAttribute("style");
     displayQuestion();
     countdown();
-})
+});
 
+var timeInterval; 
 //count down timer
- function countdown(){
-     var timeInterval = setInterval(function(){
+function countdown(){
+    timeInterval = setInterval(function(){
          if (time > 0){
              timeLeft.textContent = time;
              time--;
-         } else {
-             alert("Times up!");
-             gameOver();
-             clearInterval(timeInterval);
-             timeLeft.setAttribute("style", "display:none;");
+        }else{
+            alert("Times up!");
+            clearInterval(timeInterval);
+            timeLeft.setAttribute("style", "display:none;");
+            gameOver();     
          }
      }, 1000);
 }
+
 function displayQuestion(){
 
     var questionTitle = document.querySelector("#question-title");
@@ -82,6 +94,7 @@ function displayQuestion(){
     
     function checkAnswer (e){
         //check if answer is correct or incorrect
+
         if (e.path[0].attributes.value.value !== quizQuestions[questionIndex].correct){
             time -= 5;
             var incorrect = document.createElement("p");
@@ -95,18 +108,47 @@ function displayQuestion(){
             questionList.appendChild(correct);
             score++;
         }  
+
         //to allow time for viewer to see if answer is correct or not before moving onto the next
         setTimeout(function(){
-            if (questionIndex < quizQuestions.length){
+            if (questionIndex < quizQuestions.length -1){
                 questionIndex++;
                 displayQuestion();
             } else{
+                clearInterval(timeInterval);
+                timeLeft.setAttribute("style", "display:none;");
                 gameOver();
             }  
         }, 1000);
     };
 };
 
+
+function saveScore(){
+    //store
+    gameOverScreen.setAttribute("style", "display:none;");
+    scoreScreen.removeAttribute("style");
+    console.log(scoreScreen);
+    scoreScreen.style.display = "block";
+    
+    //retrieve
+    var viewScore = document.querySelector("#display-score")
+    var scores = JSON.parse(localStorage.getItem('scores'))
+    scores.forEach( function (e) {
+
+        var scoreInitials = document.createElement("span");
+        scoreInitials.textContent = e.initials + ' - ' + e.highscore //localStorage.getItem("initials") + " - " + localStorage.getItem("highscore");
+        scoreInitials.classList.add("score-view");
+        viewScore.appendChild(scoreInitials);
+    })
+
+
+    var redoButton = document.querySelector("#redo-btn");
+    redoButton.addEventListener("click", function(){
+        location.reload();
+    });
+
+};
 
 function gameOver(){
     //change to game over screen
@@ -116,12 +158,22 @@ function gameOver(){
     var gameScore = document.querySelector("#game-score");
     gameScore.textContent = "Your final score is " + score;
     //create label and input for initials
-    var enterInitialsEl = document.createElement("div");
-    enterInitialsEl.classList.add("enter-initials");
-    enterInitialsEl.innerHTML = "<label class='initials-label' for='input'>Enter Initials:</label><input type='text' name='input' class='initials-input'/>";
-    gameOverScreen.appendChild(enterInitialsEl);
- 
-    //store input in local storage
     
- 
-}
+    var initialsButtonEl = document.querySelector("#btn-initials");
+  
+   
+    //add event listener for button
+    initialsButtonEl.addEventListener("click", function( event ){
+        event.preventDefault();
+        console.log("button clicked");
+        var enterInitialsEl =document.querySelector("#initials-input").value;
+        var scores = localStorage.getItem('scores') ? JSON.parse(localStorage.getItem('scores')) : []
+        scores.push({ 'initials' : enterInitialsEl, 'highscore' : score })
+        localStorage.setItem('scores', JSON.stringify(scores))
+        localStorage.setItem("initials", enterInitialsEl);
+        localStorage.setItem("highscore", score);
+        saveScore();
+    });
+};    
+    
+

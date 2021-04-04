@@ -9,6 +9,7 @@
 </head>
 <body>
     <header>
+        <span id="quick-view">View High Scores</span>
         <span id="time-left"></span>
     </header>
     <main>
@@ -28,6 +29,16 @@
             <h2>Game Over!</h2>
             <p>Lets see how you did!</p>
             <p id="game-score"></p>
+            <form class="enter-initials">
+                <label class='initials-label' for='input'>Enter Initials:</label>
+                <input id='initials-input' type='text' name='input' class='initials-input'/>
+                <button id="btn-initials" class='btn-initials' type='submit'>Submit</button>
+            </form>
+        </div>
+        <div id="score-list" style="display:none;">
+            <h2>High Scores</h2>
+            <span id="display-score"></span>
+           <button id="redo-btn" class="btn">Re-Do Quiz</button>
         </div>
     </main>
 
